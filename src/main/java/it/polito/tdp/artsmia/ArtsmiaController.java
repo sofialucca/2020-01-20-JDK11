@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.artsmia.model.Adiacenti;
+import it.polito.tdp.artsmia.model.Artist;
 import it.polito.tdp.artsmia.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,10 +60,44 @@ public class ArtsmiaController {
     @FXML
     void doCalcolaPercorso(ActionEvent event) {
     	txtResult.clear();
-    	txtResult.appendText("Calcola percorso");
+    	if(!isValid()) {
+    		return;
+    	}
+    	String input = this.txtArtista.getText();
+    	List<Artist> result = model.getCammino(Integer.parseInt(input));
+    	if(result.isEmpty()) {
+    		txtResult.appendText("IDENTIFICATIVO " + input + " NON APPARTIENE AL GRAFO");
+    	}else if(result.size() == 1) {
+    		txtResult.appendText("ARTISTA CON IDENTIFICATIVO " + input + " è ISOLATO");
+    	}else {
+    		txtResult.appendText("PERCORSO A PARTIRE DA ARTISTA CON IDENTIFCATIVO " + input + ":\n");
+    		result.remove(0);
+    		txtResult.appendText("\nNUMERO OTTIMO DI ESPOSIZIONI: " + model.getCostoOttimo() + "\n");
+    		for(Artist a: result) {
+    			txtResult.appendText("\n" + a.toString());
+    		}
+    	}
     }
 
-    @FXML
+    private boolean isValid() {
+		String s = this.txtArtista.getText();
+		if(s == "") {
+			txtResult.appendText("ERRORE: inserire un valore per trovare il percorso");
+			return false;
+		}
+		try {
+			if(Integer.parseInt(s)<0) {
+				txtResult.appendText("ERRORE: identificativo dell'artista deve essere un numero intero positivo");
+				return false;
+			}
+		}catch(NumberFormatException nfe) {
+			txtResult.appendText("ERRORE: identificativo deve essere un numero");
+			return false;
+		}
+		return true;
+	}
+
+	@FXML
     void doCreaGrafo(ActionEvent event) {
     	txtResult.clear();
     	String ruolo = this.boxRuolo.getValue();

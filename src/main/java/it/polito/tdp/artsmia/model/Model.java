@@ -18,6 +18,8 @@ public class Model {
 	private ArtsmiaDAO dao;
 	private Map<Integer,Artist> idMap;
 	private List<Adiacenti> archi;
+	private List<Artist> percorsoOttimo;
+	private double costoOttimo;
 	
 	public Model() {
 		dao = new ArtsmiaDAO();
@@ -53,5 +55,49 @@ public class Model {
 	
 	public int sizeEdges() {
 		return grafo.edgeSet().size();
+	}
+	
+	public List<Artist> getCammino(int idArtista){
+		this.percorsoOttimo = new ArrayList<>();
+		this.costoOttimo = 0;
+		Artist partenza = idMap.get(idArtista);
+		//System.out.println(idMap);
+		if(partenza != null) {
+			List<Artist> parziale = new ArrayList<>();
+			parziale.add(partenza);
+			cerca(parziale,0, partenza);
+		}
+		return percorsoOttimo;
+	}
+
+	private void cerca(List<Artist> parziale, double L, Artist partenza) {
+
+		//System.out.println(Graphs.neighborListOf(grafo, partenza));
+		if(parziale.size() == 1) {
+			for(Artist a : Graphs.neighborListOf(grafo, partenza)) {
+				DefaultWeightedEdge e = grafo.getEdge(partenza, a);
+				parziale.add(a);
+				cerca(parziale, grafo.getEdgeWeight(e),a);
+				parziale.remove(a);
+			}
+		}else {
+			for(Artist a : Graphs.neighborListOf(grafo, partenza)) {
+				DefaultWeightedEdge e = grafo.getEdge(partenza, a);
+				if(!parziale.contains(partenza) && grafo.getEdgeWeight(e) == L) {
+					parziale.add(a);
+					cerca(parziale, L, a);
+					parziale.remove(a);
+				}
+			}
+		}
+		if(parziale.size()>percorsoOttimo.size()) {
+			percorsoOttimo = new ArrayList<>(parziale);
+			costoOttimo = L;
+		}
+		
+	}
+	
+	public double getCostoOttimo() {
+		return this.costoOttimo;
 	}
 }
