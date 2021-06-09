@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="473.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.artsmia.ArtsmiaController">
+<BorderPane prefHeight="473.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.artsmia.ArtsmiaController">
    <top>
       <Label text="Esame 20/01/2020" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -40,12 +40,12 @@
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnArtistiConnessi" mnemonicParsing="false" onAction="#doArtistiConnessi" prefWidth="200.0" text="Artisti Connessi" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Button fx:id="btnArtistiConnessi" disable="true" mnemonicParsing="false" onAction="#doArtistiConnessi" prefWidth="200.0" text="Artisti Connessi" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnCalcolaPercorso" mnemonicParsing="false" onAction="#doCalcolaPercorso" prefWidth="200.0" text="Calcola Percorso" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Button fx:id="btnCalcolaPercorso" disable="true" mnemonicParsing="false" onAction="#doCalcolaPercorso" prefWidth="200.0" text="Calcola Percorso" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="20.0" />
                      </GridPane.margin>
@@ -61,10 +61,10 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtArtista" maxWidth="-Infinity" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtArtista" disable="true" maxWidth="-Infinity" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <TextArea fx:id="txtResult" prefHeight="354.0" prefWidth="300.0">
+            <TextArea fx:id="txtResult" editable="false" prefHeight="354.0" prefWidth="300.0">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
